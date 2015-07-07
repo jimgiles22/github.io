@@ -1,0 +1,604 @@
+
+<!doctype html>
+<html>
+    <head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style.css">
+	<link href='https://fonts.googleapis.com/css?family=Merriweather:400' rel='stylesheet' type='text/css'>
+	<script src="https://use.typekit.net/qtf4lru.js"></script>
+	<script>try{Typekit.load();}catch(e){}</script>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<title></title>
+	<script>
+ 	$(document).ready(function() {
+ 		var contentheight,
+ 			bottomnav,
+ 			scenebackground,
+ 			sceneID,
+ 			nextIDTitle,
+ 			previousIDTitle;
+
+ 		var sceneimage = ($(".scene-background").height() / $(window).height()) * 100
+
+
+ 		var title = $("h1.title").text();
+ 		document.title = title
+ 		var lastID = "1";
+ 		 var nextstory = $(".second h3.scene-title").text();
+ 		 $("h3.next-story").text(nextstory)
+
+
+
+
+ 		 //Scroll Prevent
+ 		$(document).on('DOMMouseScroll mousewheel', '.container', function(ev) {
+			 if ($(window).width() >= 500 ){
+				    var $this = $(this),
+				        scrollTop = this.scrollTop,
+				        scrollHeight = this.scrollHeight,
+				        height = $this.height(),
+				        delta = (ev.type == 'DOMMouseScroll' ?
+				            ev.originalEvent.detail * -40 :
+				            ev.originalEvent.wheelDelta),
+				        up = delta > 0;
+
+				    var prevent = function() {
+				        ev.stopPropagation();
+				        ev.preventDefault();
+				        ev.returnValue = false;
+				        return false;
+				    }
+
+				    if (!up && -delta > scrollHeight - height - scrollTop) {
+				        // Scrolling down, but this will take us past the bottom.
+				        $this.scrollTop(scrollHeight);
+				        return prevent();
+				    } else if (up && delta > scrollTop) {
+				        // Scrolling up, but this will take us past the top.
+				        $this.scrollTop(0);
+				        return prevent();
+				    }
+			  }
+		});
+
+		$(document).on('DOMMouseScroll mousewheel', '.navigation-container', function(ev) {
+			    if ($(window).width() >= 500 ){
+				    var $this = $(this),
+				        scrollTop = this.scrollTop,
+				        scrollHeight = this.scrollHeight,
+				        height = $this.height(),
+				        delta = (ev.type == 'DOMMouseScroll' ?
+				            ev.originalEvent.detail * -40 :
+				            ev.originalEvent.wheelDelta),
+				        up = delta > 0;
+
+				    var prevent = function() {
+				        ev.stopPropagation();
+				        ev.preventDefault();
+				        ev.returnValue = false;
+				        return false;
+				    }
+
+				    if (!up && -delta > scrollHeight - height - scrollTop) {
+				        // Scrolling down, but this will take us past the bottom.
+				        $this.scrollTop(scrollHeight);
+				        return prevent();
+				    } else if (up && delta > scrollTop) {
+				        // Scrolling up, but this will take us past the top.
+				        $this.scrollTop(0);
+				        return prevent();
+				    }
+			  }
+		});
+
+		// Clicking on next and previous buttons
+		$(".event-right .active").on("click",function(){
+			var sceneID = $(this).parents(document).children(".container.active").attr("id")
+			var nextID = parseInt($(this).parents(document).children(".container.active").attr("id")) + 1
+				$(".scene-list-container").removeClass("active")
+				$("#" + nextID + ".scene-list-container").addClass("active")
+				$(".container").removeClass("active")
+				$("#" + nextID + ".container").addClass("active")
+				$(".content-container").removeClass("top")
+				$(".container").children(".content-container").hide(0, function(){});
+				$(".container").children(".content-container").show().delay(200)
+				$(".container").children(".content-container").addClass("top").delay(150).queue(function(){
+					$(".container").children(".content-container").removeClass("top").dequeue();
+				});
+
+			
+
+		})
+
+
+		$(".event-left .active").on("click",function(){
+			var sceneID = $(this).parents(document).children(".container.active").attr("id")
+			var previousID = parseInt($(this).parents(document).children(".container.active").attr("id")) - 1;
+				$(".scene-list-container").removeClass("active")
+				$("#" + previousID + ".scene-list-container").addClass("active")
+				$(".container").removeClass("active")
+				$("#" + previousID + ".container").addClass("active")
+				$(".content-container").removeClass("top")
+				$(".container").children(".content-container").hide(0, function(){});
+				$(".container").children(".content-container").show().delay(200)
+				$(".container").children(".content-container").addClass("bottom").delay(150).queue(function(){
+					$(".container").children(".content-container").removeClass("bottom").dequeue();
+				});
+
+			
+	
+		})
+		
+		// Clicking on next and previous buttons
+		$(".event.active").on("click",function(){
+			var sceneID = $(this).parents(document).children(" .container.active").attr("id")
+			var nextIDTitle = ($("#" + (parseInt(sceneID)+1) + ".container" + " .scene-title").text())
+			var previousIDTitle = ($("#" + (parseInt(sceneID)-1) + ".container" + " .scene-title").text())
+			contentheight = (($("#" + sceneID + ".container").children(".content-container").height()) / $(window).height()) *100;
+			var scenelistImage = $("#" + sceneID + ".container" + " .scene-background").css("background-image")
+			if ((nextIDTitle).length >= 1) {
+			        	$(".event-right .event").addClass("active");
+				$("h3.next-story").text(nextIDTitle)
+			 }
+			 if ((nextIDTitle).length == 0) {
+				$(".event-right .event").removeClass("active");
+
+			 }
+
+			 if ((previousIDTitle).length >= 1) {
+			        	$(".event-left .event").addClass("active");
+			      	 $("h3.previous-story").text(previousIDTitle)
+
+			 }
+			 if ((previousIDTitle).length == 0) {
+			 	$(".event-left .event").removeClass("active");
+
+			 }
+
+			if ($("#" + sceneID + ".container" + " .scene-background").css("background-image") === undefined){
+				$("#" + sceneID + ".container").addClass("no-image")
+			} else{
+				$("#" + sceneID + ".container").removeClass("no-image")
+			}
+			 $(".container").scrollTop(0);
+
+		})
+
+		// Next and previous Details on load
+		$(".event.active").each(function(){
+			var sceneID = $(this).parents(document).children(" .container.active").attr("id")
+			var nextIDTitle = ($("#" + (parseInt(sceneID)+1) + ".container" + " .scene-title").text())
+			var previousIDTitle = ($("#" + (parseInt(sceneID)-1) + ".container" + " .scene-title").text())
+			contentheight = (($("#" + sceneID + ".container").children(".content-container").height()) / $(window).height()) *100;
+			var scenelistImage = $("#" + sceneID + ".container" + " .scene-background").css("background-image")
+			if ((nextIDTitle).length > 0) {
+			        	$(".event-right .event").addClass("active");
+				$("h3.next-story").text(nextIDTitle)
+			 }
+			 if ((nextIDTitle).length = 0) {
+				$(".event-right .event").removeClass("active");
+
+			 }
+
+			 if ((previousIDTitle).length > 0) {
+			        	$(".event-left .event").addClass("active");
+			      	 $("h3.previous-story").text(previousIDTitle)
+
+			 }
+			 if ((previousIDTitle).length == 0) {
+			 	$(".event-left .event").removeClass("active");
+
+			 }
+
+			if ($("#" + sceneID + ".container" + " .scene-background").css("background-image") === undefined){
+				$("#" + sceneID + ".container").addClass("no-image")
+			} else{
+				$("#" + sceneID + ".container").removeClass("no-image")
+			}
+		})
+
+	
+
+	
+	
+
+		// Clicking on side bar
+		$(".scene-list-container").on("click",function(){
+			var sceneID = $(this).attr("id")
+			var nextIDTitle = ($("#" + (parseInt(sceneID) + 1) + ".container" + " .scene-title").text())
+			var previousIDTitle = ($("#" + (parseInt(sceneID) - 1)+ ".container" + " .scene-title").text())
+			var scenelistImage = $("#" + sceneID + ".container" + " .scene-background").css("background-image")
+			// var imageID = eval("image" + sceneID)
+			// var captionID = eval("caption" + sceneID)
+			
+			contentheight = (($("#" + sceneID + ".container").children(".content-container").height()) / $(window).height()) *100;
+			bottomnav = ($(".event-navigation").height()  / $(window).height())*100
+			// scenebackground = (80 - (($("#" + sceneID + ".container").children(".content-container").height()) + $(".event-navigation").height()) / $(window).height() * 100)
+			if ((nextIDTitle).length > 0) {
+			        	$(".event-right .event").addClass("active");
+				$("h3.next-story").text(nextIDTitle)
+			 } else{
+				$(".event-right .event").removeClass("active");
+
+			 }
+
+			 if ((previousIDTitle).length > 0) {
+			        	$(".event-left .event").addClass("active");
+			      	 $("h3.previous-story").text(previousIDTitle)
+
+			 } else{
+			 	$(".event-left .event").removeClass("active");
+
+			 }
+			
+			
+			 
+			$(".content-container").removeClass("bottom")
+			$(".content-container").removeClass("top")
+
+			if(lastID < sceneID){
+				$("#" + sceneID + ".container").hide().delay(0).queue(function(){
+					$("#" + sceneID + ".container").show().dequeue();
+				});
+				$("#" + sceneID + ".container").children(".content-container").addClass("top").delay(150).queue(function(){
+				    $("#" + sceneID + ".container").children(".content-container").removeClass("top").dequeue();
+				});
+
+			}
+			if(lastID > sceneID){
+				$("#" + sceneID + ".container").hide().delay(0).queue(function(){
+					$("#" + sceneID + ".container").show().dequeue();
+				});
+				$("#" + sceneID + ".container").children(".content-container").addClass("bottom").delay(150).queue(function(){
+				    $("#" + sceneID + ".container").children(".content-container").removeClass("bottom").dequeue();
+				});
+
+			}
+
+			if (!$(this).hasClass("active")){
+				$(".scene-list-container").removeClass("active")
+				$(this).addClass("active")
+				$(".container").removeClass("active")
+				$("#" + sceneID + ".container").addClass("active")
+				lastID = sceneID;
+				$(".container").scrollTop(0);
+			}
+
+			if (scenelistImage === undefined){
+				$("#" + sceneID + ".container").addClass("no-image")
+
+			}else{
+				$("#" + sceneID + ".container").removeClass("no-image")
+			}
+
+			
+
+			
+
+
+
+		});
+		
+		
+
+		// Opening images
+		$(".scene-background").on("click", function(){
+			$(".gallery-background").addClass("active")
+			var url = $(this).css("background-image");
+			url = url.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+			$(".gallery-background img").attr("src", url)
+			var caption = $(this).children(".caption").text();
+			var screenImage = $(".gallery-background img");
+			var theImage = new Image();
+			theImage.src = screenImage.attr("src");
+			var imageWidth = theImage.width;
+			var imageHeight = theImage.height;
+
+			$(".gallery-background img").css("width",imageWidth)
+			$(".gallery-background img").css("height",imageHeight)
+			$(".gallery-background .caption").text(caption)
+			$(".gallery-background .caption").addClass("active")
+		})	
+
+		$(".gallery-background").on("click", function(){
+			$(".gallery-background").removeClass("active")
+			$(".gallery-background .caption").removeClass("active")
+		})
+
+	
+		//responsive + opening
+
+		$(".responsive").on("click",function(){
+			$(this).toggleClass("active")
+			$(".navigation-container").fadeToggle(200,function(){})
+			$("body").toggleClass("small")
+		})
+
+		$(".scene-list-container").on("click", function(){
+			$(".navigation-container.start").removeClass("start")
+
+			 if ($(window).width() <= 500 ){
+				$(".navigation-container").fadeOut(200,function(){})
+				$(".responsive").removeClass("active")
+				$(".responsive").removeClass("first")
+  			     }
+		})
+
+		$(".navigation-container").on("click",function(){
+			$(this).css("overflow-y","scroll")
+		})
+
+		//hovering on starting navigation container
+
+
+		var scenelistID = $(".scene-list-container.first").attr("id")
+		var scenelistImage = $("#" + scenelistID + ".container" + " .scene-background").css("background-image")
+		$(".image-background").css("background-image", scenelistImage)
+
+
+		$(".scene-list-container").hover(function(){
+			var scenelistID = $(this).attr("id")
+			var scenelistImage = $("#" + scenelistID + ".container" + " .scene-background").css("background-image");
+			$(".image-background").css("background-image", scenelistImage);
+			$(".scene-list-container").removeClass("hovered");
+			$(this).addClass("hovered");
+
+			if ($("#" + scenelistID + ".container" + " .scene-background").css("background-image") === undefined){
+				$(".image-background").addClass("logo-large")
+				$(".image-background").css("background-image", "url(img/logolarge.svg)")
+			} else{
+				$(".image-background").removeClass("logo-large")
+			}
+
+		},function(){
+			var scenelistID = $(this).attr("id")
+			var scenelistImage = $("#" + scenelistID + ".container" + " .scene-background").css("background-image")
+			var scenelistactiveID = $(".scene-list-container.active").attr("id")
+			var scenelistactiveImage = $("#" + scenelistactiveID + ".container" + " .scene-background").css("background-image")
+			if ($(".scene-list-container").hasClass("active")){
+				if (!scenelistactiveImage) {
+					$(".image-background").css("background-image", 'url(img/logolarge.svg)');
+					$(".image-background").addClass("logo-large")
+				} else {
+					$(".image-background").css("background-image", scenelistactiveImage);
+					$(".image-background").removeClass("logo-large")
+				}
+				$(".scene-list-container").removeClass("hovered")
+				$(".image-background").css("background-image", scenelistactiveImage)
+			}
+
+		})
+
+		//Share function
+
+		$(".event-share-link").on("click",function(){
+			$(".share-container").fadeIn("200",function(){})
+			$(".share-container li").addClass("active")
+		})
+		$(".share-container .close").on("click",function(){
+			$(".share-container").fadeOut("200",function(){})
+			$(".share-container li").removeClass("active")
+		})
+
+
+ 	});
+        </script>
+    </head>
+    <body>
+	
+	<div class="responsive active first">
+		<span></span>
+	</div>
+	<div class="share-container">
+		<li class="facebook"><h1>Facebook</h1></li>
+		<li class="twitter"><h1>Twitter</h1></li>
+		 <li class="email"><h1>Email</h1></li>
+		 <li class="share-link"><h1>Copy Link</h1></li>
+		 <div class="close"></div>
+	</div>
+    	<div class="gallery-background">
+    		<img>
+    		<h5 class="caption"></h5>
+    	</div>
+
+    	<div class="navigation-container start">
+    		<div class="title-container">
+    			<!-- <div class="share">
+    				<h5 class="timeline-share-link">Share this story</h5>
+    			</div> -->
+    			<div class="timeline-logo">
+    			<b>TIMELINE</b>
+    			</div>
+    			<div class="timeline-title">
+    				<h1 class="title">
+    					FIFA: A History of  Scandal
+    				</h1>
+    			</div>
+    		</div>
+
+    		<div class="scene-list-container first hovered" id="1">
+    			<div class= "scene-container">
+    				<h3 class= "scene-title"> FIFA welcomes apartheid South Africa</h3>
+    				<h7 class= "scene-date"> 1961 </h7>
+    			</div>
+    		</div>
+    		<div class="scene-list-container" id="2">
+    			<div class= "scene-container">
+    				<h3 class= "scene-title"> World Cup qualifier played in prison camp</h3>
+    				<h7 class= "scene-date"> November 21, 1973 - Santiago, Chile </h7>
+    			</div>
+    		</div>
+    		<div class="scene-list-container" id="3">
+    			<div class= "scene-container">
+    				<h3 class= "scene-title">Former broadcaster talks bribes</h3>
+    				<h7 class= "scene-date"> 1982 - Zurich </h7>
+    			</div>
+    		</div>
+    		<div class="scene-list-container" id="4">
+    			<div class= "scene-container">
+    				<h3 class= "scene-title"> Germany sends arms to secure vote</h3>
+    				<h7 class= "scene-date"> 2000 - Berlin </h7>
+    			</div>
+    		</div>
+    		<div class="scene-list-container" id="5">
+    			<div class= "scene-container">
+    				<h3 class= "scene-title"> FIFA pays hush money to Ireland</h3>
+    				<h7 class= "scene-date"> 2010 - Dublin, Ireland </h7>
+    			</div>
+    		</div>
+    		<div class="image-background">
+    		</div>
+
+    	</div>
+
+        	<div class="main-container">
+
+	        
+
+        		<div class="container active" id="1">
+
+
+			<div class="scene-background" style="background-image: url(img/1.png)">
+				<h5 class="caption">Stanley Rous & Lodewijk Brunt</h5>
+			</div>
+
+			<div class="main content-container">
+				<div class="main scene-title-container">
+			        		<h2 class="scene-title">FIFA welcomes apartheid South Africa</h2>
+		        		</div>
+		        		<div class="main scene-date-container">
+					<h6 class="scene-date">1961</h6>
+				</div>
+				<h4 class="content">
+					Englishman Stanley Rouse looked at the soccer assocation of apartheid-era South Africa and said it was free from discrimination. He allowed South Africa to play other teams, though they fielded different teams based on the race of their opponents.
+					Englishman Stanley Rouse looked at the soccer assocation of apartheid-era South Africa and said it was free from discrimination. He allowed South Africa to play other teams, though they fielded different teams based on the race of their opponents.
+					Englishman Stanley Rouse looked at the soccer assocation of apartheid-era South Africa and said it was free from discrimination. He allowed South Africa to play other teams, though they fielded different teams based on the race of their opponents.
+					Englishman Stanley Rouse looked at the soccer assocation of apartheid-era South Africa and said it was free from discrimination. He allowed South Africa to play other teams, though they fielded different teams based on the race of their opponents.
+
+					
+
+				</h4>
+				<div class="share">
+					<h5 class="event-share-link">SHARE</h5>
+				</div>
+			</div>
+		</div>
+
+		<div class="container" id="2">
+
+			<div class="scene-background" style="background-image: url(img/2.png)">
+				<h5 class="caption">Contribution From a blog viewer. (Chile Squad</h5>
+			</div>
+
+			<div class="main content-container">
+				<div class="main scene-title-container">
+			        		<h2 class="scene-title">World Cup qualifier played in prison camp</h2>
+		        		</div>
+		        		<div class="main scene-date-container">
+					<h6 class="scene-date">November 21, 1973 - Santiago, Chile</h6>
+				</div>
+				<h4 class="content">
+					The Soviet Union had a playoff match against Chile to decide which of the two teams would go to the 1974 World Cup. The Soviets refused to set foot in the Estadio Nacional, which Chile’s dictator was using as a prison. FIFA insisted the Soviets play, and when they didn’t Chile won by FIFA-approved forfeit.
+
+					The Soviet Union had a playoff match against Chile to decide which of the two teams would go to the 1974 World Cup. The Soviets refused to set foot in the Estadio Nacional, which Chile’s dictator was using as a prison. FIFA insisted the Soviets play, and when they didn’t Chile won by FIFA-approved forfeit.
+
+					The Soviet Union had a playoff match against Chile to decide which of the two teams would go to the 1974 World Cup. The Soviets refused to set foot in the Estadio Nacional, which Chile’s dictator was using as a prison. FIFA insisted the Soviets play, and when they didn’t Chile won by FIFA-approved forfeit.
+					
+
+				</h4>
+				<div class="share">
+					<h5 class="event-share-link">SHARE</h5>
+				</div>
+			</div>
+		</div>
+
+		<div class="container" id="3">
+
+			<!-- <div class="scene-background" style="background-image: url(img/3.png)">
+				<h5 class="caption">Havelange in 1982, during his presidency of FIFA.</h5>
+			</div> -->
+			<div class="main content-container">
+				<div class="main scene-title-container">
+			        		<h2 class="scene-title">Former broadcaster talks bribes</h2>
+		        		</div>
+		        		<div class="main scene-date-container">
+					<h6 class="scene-date">1982 - Zurich</h6>
+				</div>
+				<h4 class="content">
+					Sports marketing company International Sports and Leisure (ISL) had broadcast rights to the World Cup from 1982 until the company dissolved under debt in 2001. In the investigation to where the money went, ISL execs and court documents pointed to nine-figure FIFA bribes.
+				</h4>
+				<div class="share">
+					<h5 class="event-share-link">SHARE</h5>
+				</div>
+			</div>
+		</div>
+
+		<div class="container" id="4">
+
+			<div class="scene-background" style="background-image: url(img/4.png)">
+				<h5 class="caption">Germany sold arms to Saudi Arabia to secure its vote for 2006 World Cup</h5>
+			</div>
+
+			<div class="main content-container">
+				<div class="main scene-title-container">
+			        		<h2 class="scene-title">Germany sends arms to secure vote</h2>
+		        		</div>
+		        		<div class="main scene-date-container">
+					<h6 class="scene-date">2000 - Berlin</h6>
+				</div>
+				<h4 class="content">
+					Germany was neck-and-neck with South Africa in the bid to host the 2006 World Cup, and Sepp Blatter was thought to prefer South Africa. The Germans beat the pressure with bribes including, allegedly, sending rocket-propelled grenade launchers to Saudi Arabia. Germany won by a single vote.
+				</h4>
+				<div class="share">
+					<h5 class="event-share-link">SHARE</h5>
+				</div>
+			</div>
+		</div>
+
+		<div class="container" id="5">
+
+			<div class="scene-background" style="background-image: url(img/5.png)">
+				<h5 class="caption">Stanley Rous & Lodewijk Brunt</h5>
+			</div>
+			<div class="main content-container">
+				<div class="main scene-title-container">
+			        		<h2 class="scene-title">FIFA pays hush money to Ireland</h2>
+		        		</div>
+		        		<div class="main scene-date-container">
+					<h6 class="scene-date">2010 - Dublin, Ireland</h6>
+				</div>
+				<h4 class="content">
+					A controversial hand ball by French superstar Thierry Henry led to the goal that booted Ireland from World Cup contention. The Football Association of Ireland filed a complaint, claiming foul play, but FIFA convinced the Irish to drop the case with a $7.5 million loan for a stadium.
+				</h4>
+				<div class="share">
+					<h5 class="event-share-link">SHARE</h5>
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="event-navigation-container">
+			<div class="event-navigation">
+				<div class="event-left">
+					<div class="event active">
+						<h5>< PREVIOUS</h5>
+						<h3 class="previous-story"></h3>
+					</div>
+				</div>
+				<div class="event-right">
+					<div class="event active">
+						<h5>NEXT ></h5>
+						<h3 class="next-story"></h3>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<a href="http://timeline.com" target="_blank">Powered by <b>TIMELINE</b></a>
+			</div>
+		</div>
+        	</div>
+    </body>
+</html>
