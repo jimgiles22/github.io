@@ -1,0 +1,630 @@
+body {
+    background: #f8f8f8;
+    margin: 0;
+}
+
+div.wrapper {
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px 0;
+    display: flex;
+    display: -webkit-flex;
+}
+
+div.content {
+    width: 600px;
+}
+
+div.gutter {
+    position: relative;
+    flex-grow: 1;
+    -webkit-flex-grow: 1;
+    width: 0;
+}
+
+section {
+    padding-bottom: 5em;
+}
+
+/* Text styles */
+
+h1, h2, h3, h4, h5 {
+    font-family: "Myriad Pro";
+    color: #000;
+    margin: 0;
+}
+
+h1, h2 {
+    font-weight: 200;
+}
+
+h1 {
+    font-size: 36px;
+    line-height: 51px;
+    color: #3F4044;
+    margin: 15px 0;
+}
+
+h2 {
+    font-size: 24px;
+    line-height: 1.3;
+}
+
+p {
+    font-family: "Merriweather";
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 36px;
+    color: #3F4044;
+}
+
+span.source, span.meta {
+    display: block;
+}
+
+span.source {
+    font-family: "Myriad Pro";
+    font-size: 10px;
+    letter-spacing: 1px;
+    line-height: 13px;
+    text-transform: uppercase;
+    margin-top: 1em;
+}
+
+span.source a:hover {
+    cursor: pointer;
+}
+
+a {
+    color: #54ABED;
+}
+
+span.meta {
+    font-family: "Myriad Pro";
+    font-weight: 200;
+    color: #979797;
+    font-size: 12px;
+    margin: 5px 0;
+}
+
+span.meta.large {
+    font-family: "Merriweather";
+    font-weight: 300;
+}
+
+
+/* Context cards */
+
+div.gutter > div.card, div.gutter > div.card-group {
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding-left: 15px;
+    padding-right: 65px;
+    text-align: right;
+    margin-bottom: 25px;
+}
+
+ul.card-tabs {
+    display: none;
+    top: -40px;
+    right: 65px;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+ul.card-tabs li {
+    display: inline-block;
+}
+
+ul.card-tabs li img {
+    width: 28px;
+    height: 28px;
+    border-radius: 28px;
+    cursor: pointer;
+    opacity: 0.3;
+
+}
+
+ul.card-tabs li.selected img, ul.card-tabs li:hover img {
+    opacity: 1;
+
+}
+
+div.card-group.active .card-tabs {
+    display: block;
+}
+
+div.card-group.active .card.selected .card-content {
+    display: block;
+    opacity:1;
+        -webkit-transform:translate(0,0.3em);
+    transform:translate(0,0.3em);
+
+}
+
+div.card-group.active .card{
+   display:none;
+
+}
+div.card-group.active .card.selected{
+   display:block;
+}
+
+
+/*div.card.active:after, div.card-group.active:after{
+    border:solid 10px #fff;
+    width:60%;
+    height:100%;
+    padding-bottom:2.5em;
+    position:absolute;
+    right:2em;
+    top:-1.8em;
+    content:"";
+    display:block;
+    z-index:-1;
+}
+*/
+div.card-group .card .card-content {
+    animation: none;
+
+}
+
+div.card-content {
+    opacity:0;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+    -webkit-transform:translate(0,-1em);
+    transform:translate(0,-1em);
+}
+
+div.card.active div.card-content {
+    opacity:1;
+    -webkit-transform:translate(0,0em);
+    transform:translate(0,0em);
+
+}
+
+div.card-content > img {
+    width: 100%;
+    height: auto;
+}
+
+
+
+div.card-image {
+    position: absolute;
+    top: -10px;
+    right: 0px;
+    cursor: pointer;
+    z-index:10;
+}
+
+.active div.card-image img, div.card-image:hover img{
+    box-shadow: 0 2px 8px rgba(0,0,0,.20);
+}
+
+div.card-image img {
+    border: 1px solid white;  
+    width: 40px;
+    height: 40px; 
+    border-radius: 40px;
+}
+
+div.card-image span.icon {
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    position: absolute;
+    bottom: -4px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 25px;
+    border: 1px solid #fff;
+    background-color: #54ABED;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    -webkit-transform:scale(1.4);
+    transform:scale(1.4);
+    -webkit-transition: all 0.2s ease-out;
+       -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+         -o-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out;
+}
+div.card-image:hover span.icon{
+    -webkit-transform:scale(1);
+    transform:scale(1);
+}
+.active .card-image:hover span.icon, .active .card-image span.icon{
+    -webkit-transform:scale(1);
+    transform:scale(1);
+}
+
+img.card {
+    width: 100%;
+    height: auto;
+    margin: 20px 0;
+}
+
+/* Icons */
+
+span.icon.statement {
+    background-image: url('img/icon-statement.svg');
+}
+
+span.icon.twitter {
+    background-image: url('img/icon-twitter.svg');
+}
+
+span.icon.instagram {
+    background-image: url('img/icon-instagram.svg');
+}
+
+span.icon.film {
+    background-image: url('img/icon-film.svg');
+}
+
+span.icon.music {
+    background-image: url('img/icon-music.svg');
+}
+
+span.icon.chart {
+    background-image: url('img/icon-chart.svg');
+}
+
+span.icon.stock {
+    background-image: url('img/icon-stock.svg');
+}
+
+span.icon.book {
+    background-image: url('img/icon-book.svg');
+}
+
+span.icon.question {
+    background-image: url('img/icon-question.svg');
+}
+
+span.icon.clock {
+    background-image: url('img/icon-clock.svg');
+}
+div.card div.card-image, div.card-group div.card-image{
+
+}
+div.card.active div.card-image, div.card-group.active div.card-image {
+    -webkit-transform: scale(1.0) translate(-1em,1em);
+    transform: scale(1.0) translate(-1em,1em);
+    -webkit-filter: grayscale(0%);
+    filter:grayscale(0%);
+}
+
+/* Card text styles */
+
+div.card h2 {
+}
+
+div.card h2:first-child {
+    margin-top: 0;
+}
+
+div.card h3 {
+    font-weight: 500;
+    font-size: 16px;
+    color: #000000;
+    line-height: 1.3;
+     margin-top:0.5em;
+ 
+}
+
+div.card h4 {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.3;
+}
+div.card h5 {
+    font-weight: 500;
+    font-size: 16px;
+    color: #000000;
+    line-height: 1.3;
+}
+
+
+div.card p {
+    font-size: 14px;
+    color: #000;
+    line-height: 1.8;  
+    margin: 5px 0;  
+}
+
+div.card p:first-child {
+    margin-top: 0;
+}
+
+
+/* Album, book, movie covers */
+
+div.cover {
+    overflow: auto;
+    position: relative;
+    margin-bottom: 10px;
+}  
+
+div.cover div.left {
+    position: absolute;
+    left: 0;
+    right: 120px;
+    padding-right: 15px;
+    bottom: 0;
+}
+
+div.cover div.right {
+    position: relative;
+    float: right;
+    width: 120px;
+}
+
+div.cover div.right img {
+    width: 100%;
+    height: auto;
+}
+
+/* Music sample */
+
+div.music-sample {
+    display: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0,0,0,0.5);
+    background-image: url('img/play-sample.svg');
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    animation: fadein 0.5s;
+}
+
+div.cover div.right:hover div.music-sample {
+    display: block;
+    cursor: pointer;
+}
+
+
+/* Pollster chart */
+
+div.chart {
+    margin: 8px 0 5px 0;
+}
+
+div.chart div.bar {
+    width: 100%;
+    height: 2px;
+    background: #D8D8D8;
+}
+
+ div.chart div.bar div.inner {
+    background: #54ABED;
+    height: 100%;
+    width:0%;
+    -webkit-transition: all 1s cubic-bezier(0,.31,.35,1);
+       -moz-transition: all 1s cubic-bezier(0,.31,.35,1);
+        -ms-transition: all 1s cubic-bezier(0,.31,.35,1);
+         -o-transition: all 1s cubic-bezier(0,.31,.35,1);
+            transition: all 1s cubic-bezier(0,.31,.35,1);
+}
+.active div.chart div.bar div.inner[data-width="100%"]{
+    width:100%;
+}
+ .active div.chart div.bar div.inner[data-width="47%"]{
+    width:47%;
+}
+ .active div.chart div.bar div.inner[data-width="25%"]{
+    width:25%;
+}
+
+
+
+
+div.chart div.label {
+    padding: 8px 0;
+    font-family: "Myriad Pro";
+    font-size: 12px;
+    overflow: auto;
+    margin-bottom: 5px;
+}
+
+div.chart div.label div.item {
+    float: left;
+}
+
+div.chart div.label div.value {
+    float: right;
+    color: #979797;
+}
+
+div.chart div.label div.value span {
+    color: #000;
+}
+
+/* Instagram profile */
+
+div.profile {
+    overflow: auto;
+    margin: 4px 0;
+}
+
+div.profile .left, div.profile .right {
+    float: right;
+}
+
+div.profile .left {
+    padding: 5px 5px 0 0;
+}
+
+div.profile .right img {
+    width: 50px;
+    height: 50px;
+}
+
+div.profile h3, div.profile span.meta {
+    margin: 0;
+}
+
+img.instagram-image{
+    margin-top:0.5em;
+}
+
+/* Stock chart */
+
+img.stock {
+    margin: 15px 0;
+}
+
+
+/* Utils */
+
+.hide {
+    display: none !important;
+}
+
+/* Animations */
+
+/* Fade in */
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Grow */
+.hvr-grow {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: scale(0.7) translate(-1em,0.6em);
+  transform: scale(0.7) translate(-1em,0.6em);
+    -webkit-filter: grayscale(100%);
+    filter:grayscale(100%);
+        -webkit-transition: all 0.2s ease-out;
+       -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+         -o-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out;
+
+}
+
+ .hvr-grow.hover, .hvr-grow:hover {
+    -webkit-transform: scale(1.0) translate(-1em,0.6em);
+    transform: scale(1.0) translate(-1em,0.6em);
+    -webkit-filter: grayscale(0%);
+    filter:grayscale(0%);
+    -webkit-transition: all 0.2s ease-out;
+       -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+         -o-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out;
+    -webkit-animation-name: hvr-grow;
+    animation-name: hvr-grow;
+    -webkit-animation-duration: 0.2s;
+    animation-duration: 0.2s;
+    -webkit-animation-timing-function: cubic-bezier(.93,.02,.83,.67)
+    animation-timing-function: cubic-bezier(.93,.02,.83,.67);
+}
+
+.active .hvr-grow:hover{
+    -webkit-transform: scale(1) translate(0em,0em);
+    transform: scale(1) translate(0em,0em)
+    -webkit-animation-name: none;
+    animation-name: none;
+}
+
+
+/* Grow */
+@-webkit-keyframes hvr-grow {
+  0% {
+  -webkit-transform: scale(0.8) translate(-1em,0.6em);;
+  transform: scale(0.8) translate(-1em,0.6em);
+  }
+/*    50% {
+  -webkit-transform: scale(1.2) translate(-1em,0.6em);
+  transform: scale(1.2) translate(-1em,0.6em);
+  }*/
+   80% {
+  -webkit-transform: scale(0.9) translate(-1em,0.6em);;
+  transform: scale(0.9) translate(-1em,0.6em);
+  }
+
+}
+
+@keyframes hvr-grow {
+  0% {
+  -webkit-transform: scale(0.8) translate(-1em,0.6em);;
+  transform: scale(0.8) translate(-1em,0.6em);
+  }
+/*    50% {
+  -webkit-transform: scale(1.2) translate(-1em,0.6em);
+  transform: scale(1.2) translate(-1em,0.6em);
+  }*/
+  80% {
+  -webkit-transform: scale(0.95) translate(-1em,0.6em);;
+  transform: scale(0.95) translate(-1em,0.6em);
+  }
+}
+
+
+
+/* Pulse */
+/*@-webkit-keyframes hvr-pulse {
+  25% {
+      -webkit-transform: scale(1.0) translate(-1em,1em);
+      transform: scale(1.0) translate(-1em,1em);
+  }
+
+  75% {
+      -webkit-transform: scale(1.0) translate(-1em,0em);
+      transform: scale(1.0) translate(-1em,0em);
+  }
+}
+
+@keyframes hvr-pulse {
+  25% {
+      -webkit-transform: scale(1.0) translate(-1em,1em);
+      transform: scale(1.0) translate(-1em,1em);
+  }
+
+  75% {
+      -webkit-transform: scale(1.0) translate(-1em,0em);
+      transform: scale(1.0) translate(-1em,0em);
+  }
+}*/
+
+.hvr-pulse {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.hvr-pulse:hover, .hvr-pulse:focus, .hvr-pulse:active {
+  -webkit-animation-name: hvr-pulse;
+  animation-name: hvr-pulse;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
